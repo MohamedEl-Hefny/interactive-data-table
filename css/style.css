@@ -225,6 +225,8 @@
  }
 
  .pagination button {
+     text-wrap: nowrap;
+     gap: 2px;
      padding: 8px 10px;
      border-radius: 10px;
  }
@@ -363,5 +365,14 @@
      .toolbar {
          grid-template-columns: 1fr;
          grid-auto-rows: auto;
+     }
+
+     .toolbar .group {
+         flex-wrap: wrap;
+     }
+
+     .pagination {
+         gap: 4px;
+         padding-inline: 0;
      }
  }
