@@ -58,7 +58,7 @@ const loginMessage = document.getElementById("loginMessage");
 
 // Redirect if already logged in
 if (isAuthenticated()) {
-  window.location.href = "app.html";
+  window.location.href = "index.html";
 }
 
 // Toggle forms
@@ -83,7 +83,7 @@ loginForm.addEventListener("submit", (e) => {
   const password = document.getElementById("loginPassword").value;
   const result = login(username, password);
   if (result.success) {
-    window.location.href = "app.html";
+    window.location.href = "index.html";
   } else {
     loginMessage.textContent = result.message;
   }
