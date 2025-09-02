@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login – Public APIs</title>
+    <link rel="stylesheet" href="./css/auth.css" />
+</head>
+
+<body>
+    <main class="login-wrap">
+        <h1 id="formTitle">Login</h1>
+
+        <form id="loginForm">
+            <input type="text" id="loginUsername" placeholder="Username" required />
+            <input type="password" id="loginPassword" placeholder="Password" required />
+            <button type="submit">Login</button>
+            <p class="toggle-text">Don't have an account? <span id="showSignup">Sign Up</span></p>
+        </form>
+
+        <form id="signupForm" style="display:none;">
+            <input type="text" id="signupUsername" placeholder="Username" required />
+            <input type="password" id="signupPassword" placeholder="Password" required />
+            <button type="submit">Sign Up</button>
+            <p class="toggle-text">Already have an account? <span id="showLogin">Login</span></p>
+        </form>
+
+        <div id="loginMessage"></div>
+    </main>
+
+    <script type="text/javascript" src="./js/auth.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,100 @@
+:root {
+    --bg: #0b1020;
+    --panel: #121a33;
+    --muted: #93a1b5;
+    --text: #f5f7ff;
+    --accent: #6ee7b7;
+    --accent-2: #38bdf8;
+    --danger: #ef4444;
+    --shadow: 0 10px 25px rgba(0, 0, 0, .35);
+}
+
+body {
+    margin: 0;
+    font: 14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial;
+    color: var(--text);
+    background: var(--bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-wrap {
+    background: var(--panel);
+    padding: 32px;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    text-align: center;
+}
+
+.login-wrap h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+input[type="text"],
+input[type="password"] {
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, .12);
+    background: #0f1630;
+    color: var(--text);
+    outline: none;
+    box-shadow: var(--shadow);
+}
+
+input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+button {
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    color: #0b1020;
+    box-shadow: var(--shadow);
+    transition: transform .06s ease, opacity .2s ease;
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+#loginMessage {
+    color: var(--danger);
+    font-size: 13px;
+}
+
+#loginMessage.success {
+    color: #22c55e;
+    font-size: 13px;
+}
+
+#showSignup,
+#showLogin {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.login-wrap p {
+    font-size: 14px;
+    color: var(--muted);
+    margin: 0;
+}
