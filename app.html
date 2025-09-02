@@ -10,12 +10,136 @@
 
 <body>
     <header>
+        <div class="wrap">
+            <div class="header-bar">
+                <div class="title">Interactive Data Table <span class="pill">Public APIs</span></div>
+            </div>
+            <div id="errorBanner" class="error-banner">
+                <div>
+                    <strong>Network error.</strong> Couldn’t load data from the API. You can retry, or continue with
+                    your locally saved changes.
+                </div>
+                <div class="group">
+                    <button id="retryBtn" class="btn-ghost">Retry</button>
+                </div>
+            </div>
+            <div class="toolbar">
+                <div class="group" style="grid-column: 1 / -1;">
+                    <input id="searchInput" type="search" placeholder="Search by API name, description, or category…"
+                        aria-label="Search" />
+                </div>
+
+                <div class="group">
+                    <label for="perPageSelect" class="sr-only">Rows per page</label>
+                    <select id="perPageSelect" title="Rows per page">
+                        <option value="5">5 / page</option>
+                        <option value="10" selected>10 / page</option>
+                        <option value="20">20 / page</option>
+                        <option value="50">50 / page</option>
+                        <option value="100">100 / page</option>
+                    </select>
+                </div>
+
+                <div class="group filters">
+                    <div class="group">
+                        <select id="categoryFilter" title="Category filter">
+                            <option value="">All categories</option>
+                        </select>
+                    </div>
+
+                    <div class="group">
+                        <select id="httpsFilter" title="HTTPS filter">
+                            <option value="">HTTPS: Any</option>
+                            <option value="true">HTTPS: Yes</option>
+                            <option value="false">HTTPS: No</option>
+                        </select>
+                    </div>
+
+                    <div class="group">
+                        <select id="authFilter" title="Auth filter">
+                            <option value="">Auth: Any</option>
+                            <option value="none">Auth: None</option>
+                            <option value="apikey">Auth: API Key</option>
+                            <option value="oauth">Auth: OAuth</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="group actions" style="justify-content:flex-end;">
+                    <button id="addBtn" class="btn-primary">+ Add Entry</button>
+                    <button id="exportBtn" class="btn-ghost">Export JSON</button>
+                    <button id="resetEditsBtn" class="btn-danger" title="Clear local edits">Reset Local Edits</button>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <main>
+    <main class="wrap">
+        <section class="statusbar">
+            <div id="totals" class="meta">Loading…</div>
+            <div id="showing" class="meta"></div>
+        </section>
+
+        <!-- Inline create form -->
+        <section id="createForm" class="inline-form card" aria-hidden="true">
+            <input id="fAPI" placeholder="API name *" />
+            <input id="fDescription" placeholder="Description *" />
+            <input id="fCategory" placeholder="Category *" />
+            <select id="fHTTPS">
+                <option value="true" selected>HTTPS: Yes</option>
+                <option value="false">HTTPS: No</option>
+            </select>
+            <select id="fAuth">
+                <option value="">Auth: None</option>
+                <option value="apiKey">API Key</option>
+                <option value="OAuth">OAuth</option>
+            </select>
+            <input id="fLink" placeholder="Link (https://…) *" />
+            <div class="group">
+                <button id="saveNewBtn" class="btn-primary">Save</button>
+                <button id="cancelNewBtn" class="btn-ghost">Cancel</button>
+            </div>
+        </section>
+
+        <section class="card" style="margin-top:12px;">
+            <div id="chartWrap" class="chart" aria-label="APIs per category (top 20)"></div>
+        </section>
+
+        <section class="table-wrap" style="margin-top:12px;">
+            <table id="dataTable" aria-describedby="totals showing">
+                <thead>
+                    <tr>
+                        <th data-key="API" class="sortable"><span class="sorter">API <span
+                                    class="arrow asc">▲</span><span class="arrow desc">▼</span></span></th>
+                        <th data-key="Description" class="sortable"><span class="sorter">Description <span
+                                    class="arrow asc">▲</span><span class="arrow desc">▼</span></span></th>
+                        <th data-key="Category" class="sortable"><span class="sorter">Category <span
+                                    class="arrow asc">▲</span><span class="arrow desc">▼</span></span></th>
+                        <th data-key="HTTPS" class="sortable"><span class="sorter">HTTPS <span
+                                    class="arrow asc">▲</span><span class="arrow desc">▼</span></span></th>
+                        <th data-key="Auth" class="sortable"><span class="sorter">Auth <span
+                                    class="arrow asc">▲</span><span class="arrow desc">▼</span></span></th>
+                        <th data-key="Cors" class="sortable"><span class="sorter">CORS <span
+                                    class="arrow asc">▲</span><span class="arrow desc">▼</span></span></th>
+                        <th>Link</th>
+                        <th class="col-actions">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <tr>
+                        <td colspan="8" class="empty">Fetching data…</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <nav id="pagination" class="pagination"></nav>
     </main>
 
-    <footer>
+    <footer class="wrap" style="opacity:.7; padding-bottom:40px;">
+        <p>Data source: <a class="link" href="https://api.publicapis.org/entries" target="_blank"
+                rel="noreferrer noopener">Public APIs ↗</a>. Local changes are stored in your browser (no server
+            persistence).</p>
     </footer>
 
     <script type="text/javascript" src="./js/app.js"></script>
