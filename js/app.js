@@ -134,6 +134,19 @@ function paginate(rows) {
 // ------------------------
 // Renderers
 // ------------------------
+function renderTotals() {
+    const totals = $('#totals');
+    totals.textContent = `${state.dataset.length.toLocaleString()} entries (after local edits)`;
+}
+
+function renderFilters() {
+    // populate categories
+    const sel = $('#categoryFilter');
+    const cats = Array.from(new Set(state.dataset.map(r => r.Category).filter(Boolean))).sort((a, b) => a.localeCompare(b));
+    sel.innerHTML = '<option value="">All categories</option>' + cats.map(c => `<option value="${c.replace(/"/g, '&quot;')}">${c}</option>`).join('');
+    sel.value = state.filters.category;
+}
+
 function renderTable() {
     const tbody = $('#tableBody');
     const rows = getWorkingSet();
@@ -199,8 +212,19 @@ function renderPagination(page, pages) {
     nav.innerHTML = items.join('');
 }
 
+function renderChart() {
+    const wrap = $('#chartWrap');
+    const counts = new Map();
+    for (const r of state.dataset) { if (!r.Category) continue; counts.set(r.Category, (counts.get(r.Category) || 0) + 1); }
+    const top = Array.from(counts.entries()).sort((a, b) => b[1] - a[1]).slice(0, 20);
+    const max = top[0]?.[1] || 1;
+    wrap.innerHTML = top.map(([cat, n]) => `<div class="bar-wrap" title="${cat}: ${n}"><div class="bar" style="height:${Math.max(10, Math.round(80 * n / max))}px"></div><div class="label">${cat}</div></div>`).join('');
+}
 
 function renderAll() {
+    renderTotals();
+    renderFilters();
+    renderChart();
     renderTable();
 }
 
@@ -369,6 +393,23 @@ function onSaveEdit(tr, id) {
 }
 
 function onCancelEdit(tr, id) { rebuildDataset(); }
+
+function escapeAttr(s) { return String(s || '').replace(/["&<>]/g, c => ({ '"': '&quot;', '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c])); }
+
+function toast(msg) {
+    const t = document.createElement('div');
+    t.textContent = msg;
+    t.style.position = 'fixed';
+    t.style.bottom = '20px';
+    t.style.right = '20px';
+    t.style.background = 'rgba(12,18,40,.96)';
+    t.style.border = '1px solid rgba(255,255,255,.2)';
+    t.style.padding = '10px 12px';
+    t.style.borderRadius = '10px';
+    t.style.boxShadow = 'var(--shadow)';
+    document.body.appendChild(t);
+    setTimeout(() => { t.remove(); }, 1600);
+}
 
 function exportJSON() {
     const data = getWorkingSet();
