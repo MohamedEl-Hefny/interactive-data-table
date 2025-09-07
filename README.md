@@ -106,4 +106,3 @@ The assignment explicitly required HTML, CSS, and native JavaScript to showcase 
 - Replace static CRUD with real backend persistence
 - Add column filters (dropdown filtering by category/auth type)
 - Data visualization (charts for categories)
-- User authentication for managing entries
